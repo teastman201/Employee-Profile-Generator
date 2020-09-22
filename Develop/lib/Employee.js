@@ -15,40 +15,22 @@ class Employee {
         this.email = email;
     }
 
-    // method which prints all of the stats for a character
+    // methods to grab user input.
     getName() {
-        // console.log(`Stats for ${this.name} are as following:`);
-        // console.log(`Each attack will do ${this.strength} damage.`);
-        // console.log(`${this.name} has ${this.hitPoints} hit points remaining!`);
-        // console.log("------------");
+      return this.name;
     }
     getId() {
-        // console.log(`Stats for ${this.name} are as following:`);
-        // console.log(`Each attack will do ${this.strength} damage.`);
-        // console.log(`${this.name} has ${this.hitPoints} hit points remaining!`);
-        // console.log("------------");
+        return this.id;
     }
     getEmail() {
-        // console.log(`Stats for ${this.name} are as following:`);
-        // console.log(`Each attack will do ${this.strength} damage.`);
-        // console.log(`${this.name} has ${this.hitPoints} hit points remaining!`);
-        // console.log("------------");
-    }
-    // method which determines whether or not a character's "hitpoints" are less then zero
-    // and returns true or false depending upon the outcome
+       return this.email
+    }    
     getRole() {
-        // if (this.hitPoints <= 0) {
-        //     console.log(`${this.name} has been defeated!`);
-        //     return false;
-        // }
-        return Employee;
+        // return Employee;
+        return "Employee";
     }
 
-    // // method which takes in a second object and decreases their "hitPoints" by this character's strength
-    // attack(opponent) {
-    //     console.log(`${this.name} hit ${opponent.name} for ${this.strength}`);
-    //     opponent.hitPoints -= this.strength;
-    // }
+    
 }
 
 
