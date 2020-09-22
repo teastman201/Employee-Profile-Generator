@@ -1,15 +1,6 @@
 // TODO: Write code to define and export the Employee class
 class Employee {
     constructor(name, id, email) {
-        if (!name) {
-            throw new Error("You are missing the name.");
-        }
-        if (!id) {
-            throw new Error("You are missing the id.");
-        }
-        if (!email) {
-            throw new Error("You are missing the email address.");
-        }
         this.name = name;
         this.id = id;
         this.email = email;
@@ -17,20 +8,20 @@ class Employee {
 
     // methods to grab user input.
     getName() {
-      return this.name;
+        return this.name;
     }
     getId() {
         return this.id;
     }
     getEmail() {
-       return this.email
-    }    
+        return this.email
+    }
     getRole() {
-        // return Employee;
-        return "Employee";
+    console.log(Employee);
+    console.log('test')
+    return "Employee";
     }
 
-    
 }
 
 
