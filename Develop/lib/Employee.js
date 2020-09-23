@@ -5,7 +5,6 @@ class Employee {
         this.id = id;
         this.email = email;
     }
-
     // methods to grab user input.
     getName() {
         return this.name;
@@ -17,12 +16,7 @@ class Employee {
         return this.email
     }
     getRole() {
-    console.log(Employee);
-    console.log('test')
     return "Employee";
     }
-
 }
-
-
 module.exports = Employee;
