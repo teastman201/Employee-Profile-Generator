@@ -16,10 +16,33 @@ const render = require("./lib/htmlRenderer");
 const Employee = require("./lib/Employee");
 
 const empArray = [];
-const empObj = {};
+
+init = () => {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "team",
+            message: "Would you like to build an engineering team? An engineering team consists of a Manager, and any number of Engineers and Interns.",
+            choices: [
+                "Yes",
+                "No"
+            ]
+        }
+    ]).then(response => {
+        let team = response.team;       
+        
+        if (team === "Yes") {
+            engineeringTeam();
+        } else {           
+            console.log("Thank you, come again!")
+            process.exit;
+        }
+    })
+}
+
 
 // function to initialize program
-init = () => {
+engineeringTeam = () => {
     inquirer
         .prompt([
             {
@@ -100,7 +123,7 @@ const managerPrompts = async () => {
         let m = new Manager(e.name, e.id, e.email, officeNumber);
         empArray.push(m);
 
-        console.log(m);
+        console.log(empArray);
 
         if (addAnother === "Yes") {
             init();
@@ -134,12 +157,12 @@ const engineerPrompts = async () => {
         let r = new Engineer(e.name, e.id, e.email, github);
         empArray.push(r);
 
-        console.log(r);
+        console.log(empArray);
 
         if (addAnother === "Yes") {
-
             init();
         } else {
+            writeOutput(e, m, i, r);
             console.log("Thank you, come again!")
         }
 
@@ -168,11 +191,12 @@ const internPrompts = async () => {
         let i = new Intern(e.name, e.id, e.email, school);
         empArray.push(i);
 
-        console.log(i);
+        console.log(empArray);
         
         if (addAnother === "Yes") {
             init();
         } else {
+            writeOutput(e, m, i, r);
             console.log("Thank you, come again!")
         }
 
@@ -182,7 +206,7 @@ const internPrompts = async () => {
 const writeOutput = (e, m, i, r) => {
     //'../output/team.html'
 
-    fs.writeFile(outputPath, render, function (err) {
+    fs.writeFile(outputPath, render(empArray), function (err) {
         if (err) {
             return console.log(err);
         }
