@@ -7,10 +7,12 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
+const OUTPUT_DIR = path.resolve(__dirname, "../output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
+// Not sure how to use this
 const render = require("./lib/htmlRenderer");
+
 const Employee = require("./lib/Employee");
 
 const empArray = [];
@@ -51,31 +53,12 @@ init = () => {
             let employeeName = response.name;
             let employeeId = response.id;
             let employeeEmail = response.email;
-            let employeeType = response.class;
-            
-            // Like this, old array objects have the same properties as the newest object added to the array
-            // empObj.name = employeeName;
-            // empObj.id = employeeId;
-            // empObj.email = employeeEmail;
-            // empObj.class = employeeType;
+            let employeeType = response.class;           
 
-            empArray.push(employeeName);
-
-            empObj.id = employeeId;
-            empObj.email = employeeEmail;
-            empObj.class = employeeType;
-
-            employeeName.empObj;
-            console.log(empArray);
             e = new Employee(employeeName, employeeId, employeeEmail);
             m = new Manager(e.employeeName, e.employeeId, e.employeeEmail);
             i = new Intern(e.employeeName, e.employeeId, e.employeeEmail);
             r = new Engineer(e.employeeName, e.employeeId, e.employeeEmail);
-
-            // console.log(r);
-            // console.log(e);
-            // console.log(m);
-            // console.log(i);
 
             switch (employeeType) {
                 case "Manager":
@@ -90,112 +73,123 @@ init = () => {
                 default:
                     (console.log('Nothing supplied'))
             }
-            
-        });        
+
+        });
 }
 
 const managerPrompts = async () => {
-    await   inquirer.prompt([
-           {
-               type: "input",
-               name: "office",
-               message: "What is the manager's office number?"
-           },
-           {
-               type: "list",
-               name: "newEmployee",
-               message: "would you like to add another employee?",
-               choices: [
-                   "Yes",
-                   "No"
-               ]
-           }
-       ]).then(response => {
-           
-           let managerOffice = response.office;
-           let addAnother = response.newEmployee;            
-           empObj.office = managerOffice;
-           empArray.push(empObj);
-           console.log(empObj);
-           console.log(empArray);
-           // managerPrompts seems to be adding itself to the manager object
-           let m = new Manager(e.name, e.id, e.email, managerOffice);
-               console.log(m);
-           if (addAnother === "Yes") {
-               init();
-           } else {
-               
-               console.log("Thank you, come again!")
-           }
-           
-       })
-   }
-   const engineerPrompts = async () => {
-    await  inquirer.prompt([
-          {
-              type: "input",
-              name: "github",
-              message: "What is the engineer's GitHub username?"
-          },
-          {
-              type: "list",
-              name: "newEmployee",
-              message: "would you like to add another employee?",
-              choices: [
-                  "Yes",
-                  "No"
-              ]
-          }
-      ]).then(response => {
-          
-          let engineerGithub = response.github;
-          let addAnother = response.newEmployee;
-          
-          let r = new Engineer(e.name, e.id, e.email, engineerGithub);
-          
-          console.log(r);
-          
+    await inquirer.prompt([
+        {
+            type: "input",
+            name: "office",
+            message: "What is the manager's office number?"
+        },
+        {
+            type: "list",
+            name: "newEmployee",
+            message: "would you like to add another employee?",
+            choices: [
+                "Yes",
+                "No"
+            ]
+        }
+    ]).then(response => {
 
-          if (addAnother === "Yes") {
-              
-              init();
-          } else {
-              console.log("Thank you, come again!")
-          }
-          
-      })
-  
-  }
-  const internPrompts = async () => {
-    await     inquirer.prompt([
-             {
-                 type: "input",
-                 name: "school",
-                 message: "What is the name of the intern's school?"
-             },
-             {
-                 type: "list",
-                 name: "newEmployee",
-                 message: "would you like to add another employee?",
-                 choices: [
-                     "Yes",
-                     "No"
-                 ]
-             }
-         ]).then(response => {
-             let internSchool = response.school;
-             let addAnother = response.newEmployee;
-             let i = new Intern(e.name, e.id, e.email, internSchool);
-             console.log(i);
-             // console.log(empArray);
-             if (addAnother === "Yes") {
-                 init();
-             } else {
-                 console.log("Thank you, come again!")
-             }
-             
-         })
-     }
+        let officeNumber = response.office;
+        let addAnother = response.newEmployee;
+        let m = new Manager(e.name, e.id, e.email, officeNumber);
+        empArray.push(m);
+
+        console.log(m);
+
+        if (addAnother === "Yes") {
+            init();
+        } else {
+            writeOutput(e, m, i, r);
+            console.log("Thank you, come again!")
+        }
+
+    })
+}
+const engineerPrompts = async () => {
+    await inquirer.prompt([
+        {
+            type: "input",
+            name: "github",
+            message: "What is the engineer's GitHub username?"
+        },
+        {
+            type: "list",
+            name: "newEmployee",
+            message: "would you like to add another employee?",
+            choices: [
+                "Yes",
+                "No"
+            ]
+        }
+    ]).then(response => {
+
+        let github = response.github;
+        let addAnother = response.newEmployee;
+        let r = new Engineer(e.name, e.id, e.email, github);
+        empArray.push(r);
+
+        console.log(r);
+
+        if (addAnother === "Yes") {
+
+            init();
+        } else {
+            console.log("Thank you, come again!")
+        }
+
+    })
+
+}
+const internPrompts = async () => {
+    await inquirer.prompt([
+        {
+            type: "input",
+            name: "school",
+            message: "What is the name of the intern's school?"
+        },
+        {
+            type: "list",
+            name: "newEmployee",
+            message: "would you like to add another employee?",
+            choices: [
+                "Yes",
+                "No"
+            ]
+        }
+    ]).then(response => {
+        let school = response.school;
+        let addAnother = response.newEmployee;
+        let i = new Intern(e.name, e.id, e.email, school);
+        empArray.push(i);
+
+        console.log(i);
+        
+        if (addAnother === "Yes") {
+            init();
+        } else {
+            console.log("Thank you, come again!")
+        }
+
+    })
+}
+
+const writeOutput = (e, m, i, r) => {
+    //'../output/team.html'
+
+    fs.writeFile(outputPath, render, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log("Success!");
+    });
+
+}
 
 // function call to initialize program
 init();
