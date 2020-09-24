@@ -29,11 +29,11 @@ init = () => {
             ]
         }
     ]).then(response => {
-        let team = response.team;       
-        
+        let team = response.team;
+
         if (team === "Yes") {
             engineeringTeam();
-        } else {           
+        } else {
             console.log("Thank you, come again!")
             process.exit;
         }
@@ -69,6 +69,14 @@ engineeringTeam = () => {
                 type: "input",
                 name: "email",
                 message: "What is the email address of the employee?",
+                validate: answer => {
+                    if (answer.indexOf("@") != -1) {
+                        return true
+                    }
+                    else {
+                        return "Please enter a valid email address."                        
+                    }
+                }
             }
         ])
         .then(response => {
@@ -76,7 +84,7 @@ engineeringTeam = () => {
             let employeeName = response.name;
             let employeeId = response.id;
             let employeeEmail = response.email;
-            let employeeType = response.class;           
+            let employeeType = response.class;
 
             e = new Employee(employeeName, employeeId, employeeEmail);
             m = new Manager(e.employeeName, e.employeeId, e.employeeEmail);
@@ -105,7 +113,14 @@ const managerPrompts = async () => {
         {
             type: "input",
             name: "office",
-            message: "What is the manager's office number?"
+            message: "What is the manager's office number?",
+            validate: answer => {
+                const number = parseInt(answer)
+                if (number) {
+                    return true
+                }
+                return "Please enter a number";
+            }
         },
         {
             type: "list",
@@ -126,7 +141,7 @@ const managerPrompts = async () => {
         console.log(empArray);
 
         if (addAnother === "Yes") {
-            init();
+            engineeringTeam();
         } else {
             writeOutput(e, m, i, r);
             console.log("Thank you, come again!")
@@ -160,7 +175,7 @@ const engineerPrompts = async () => {
         console.log(empArray);
 
         if (addAnother === "Yes") {
-            init();
+            engineeringTeam();
         } else {
             writeOutput(e, m, i, r);
             console.log("Thank you, come again!")
@@ -192,9 +207,9 @@ const internPrompts = async () => {
         empArray.push(i);
 
         console.log(empArray);
-        
+
         if (addAnother === "Yes") {
-            init();
+            engineeringTeam();
         } else {
             writeOutput(e, m, i, r);
             console.log("Thank you, come again!")
