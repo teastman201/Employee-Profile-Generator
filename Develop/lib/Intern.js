@@ -1,6 +1,7 @@
 // TODO: Write code to define and export the Intern class.  HINT: This class should inherit from Employee.
 // TODO: Write code to define and export the Engineer class.  HINT: This class should inherit from Employee.
 const Employee = require("./Employee");
+const inquirer = require("inquirer");
 
 class Intern extends Employee {
     constructor(name, id, email, school) {        
@@ -22,6 +23,36 @@ class Intern extends Employee {
     }
     getRole() {
         return "Intern";
+    }
+    internPrompts = async () => {
+   await     inquirer.prompt([
+            {
+                type: "input",
+                name: "school",
+                message: "What is the name of the intern's school?"
+            },
+            {
+                type: "list",
+                name: "newEmployee",
+                message: "would you like to add another employee?",
+                choices: [
+                    "Yes",
+                    "No"
+                ]
+            }
+        ]).then(response => {
+            let internSchool = response.school;
+            let addAnother = response.newEmployee;
+            let d = new Intern(e.name, e.id, e.email, internSchool);
+            console.log(d);
+            console.log(empArray);
+            if (addAnother === "Yes") {
+                init();
+            } else {
+                console.log("Thank you, come again!")
+            }
+            
+        })
     }
 }
 module.exports = Intern;

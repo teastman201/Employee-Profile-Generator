@@ -1,3 +1,5 @@
+// How am I supposed to utilize these?
+// Should I push the user response into this file then retrieve it when it's time to write?
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -11,10 +13,23 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 const Employee = require("./lib/Employee");
 
+const empArray = [];
+const empObj = {};
+
 // function to initialize program
 init = () => {
     inquirer
         .prompt([
+            {
+                type: "list",
+                name: "class",
+                message: "Which type of employee would you like to add?",
+                choices: [
+                    "Manager",
+                    "Engineer",
+                    "Intern"
+                ]
+            },
             {
                 type: "input",
                 name: "name",
@@ -29,85 +44,51 @@ init = () => {
                 type: "input",
                 name: "email",
                 message: "What is the email address of the employee?",
-            },
-            {
-                type: "list",
-                name: "class",
-                message: "Which class does the employee belong to?",
-                choices: [
-                    "Manager",
-                    "Engineer",
-                    "Intern"
-                ]
             }
         ])
         .then(response => {
+
             let employeeName = response.name;
             let employeeId = response.id;
             let employeeEmail = response.email;
             let employeeType = response.class;
 
-            // console.log(employeeType);
+            e = new Employee(employeeName, employeeId, employeeEmail);
+            m = new Manager;
+            i = new Intern;
+            r = new Engineer;
+
+            console.log(r);
+            console.log(e);
+            console.log(m);
+            console.log(i);
+
             switch (employeeType) {
                 case "Manager":
-                    (managerPrompts())
+                    (m.managerPrompts())
                     break;
                 case "Engineer":
-                    (engineerPrompts())
+                    (r.engineerPrompts())
                     break;
                 case "Intern":
-                    (internPrompts())
+                    (i.internPrompts())
                     break;
                 default:
                     (console.log('Nothing supplied'))
             }
-        });    
-}
-
-const engineerPrompts =  () => {
-     inquirer.prompt([
-        {
-            type: "input",
-            name: "github",
-            message: "What is the engineer's GitHub username?"
-        }
-    ]).then(response => {
-        let engineerGithub = response.github;
-        console.log(engineerGithub);
-        return engineerGithub
-    })
-}
-
-const managerPrompts = () => {
-     inquirer.prompt([
-        {
-            type: "input",
-            name: "office",
-            message: "What is the manager's office number?"
-        }
-    ]).then(response => {
-        let managerOffice = response.office;
-        console.log(managerOffice);
-        return managerOffice;
-    })
-}
-
-const internPrompts =  () => {
-     inquirer.prompt([
-        {
-            type: "input",
-            name: "school",
-            message: "What is the name of the intern's school?"
-        }
-    ]).then(response => {
-        let internSchool = response.school;
-        console.log(internSchool);
-        return internSchool;
-    })    
+            
+        });
+        render;
 }
 
 // function call to initialize program
 init();
+
+// employee name should be array element with id, class, email, github/school/office as objects
+// push name to array, push everything else to the name as objects
+
+// when user selects no then write file using htmlrenderer.js
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
