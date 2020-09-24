@@ -1,5 +1,3 @@
-// How am I supposed to utilize these?
-// Should I push the user response into this file then retrieve it when it's time to write?
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -17,7 +15,7 @@ const Employee = require("./lib/Employee");
 
 const empArray = [];
 
-init = () => {
+const init = () => {
     inquirer.prompt([
         {
             type: "list",
@@ -40,9 +38,8 @@ init = () => {
     })
 }
 
-
 // function to initialize program
-engineeringTeam = () => {
+const engineeringTeam = () => {
     inquirer
         .prompt([
             {
@@ -74,13 +71,12 @@ engineeringTeam = () => {
                         return true
                     }
                     else {
-                        return "Please enter a valid email address."                        
+                        return "Please enter a valid email address."
                     }
                 }
             }
         ])
         .then(response => {
-
             let employeeName = response.name;
             let employeeId = response.id;
             let employeeEmail = response.email;
@@ -107,7 +103,6 @@ engineeringTeam = () => {
 
         });
 }
-
 const managerPrompts = async () => {
     await inquirer.prompt([
         {
@@ -132,7 +127,6 @@ const managerPrompts = async () => {
             ]
         }
     ]).then(response => {
-
         let officeNumber = response.office;
         let addAnother = response.newEmployee;
         let m = new Manager(e.name, e.id, e.email, officeNumber);
@@ -143,10 +137,8 @@ const managerPrompts = async () => {
         if (addAnother === "Yes") {
             engineeringTeam();
         } else {
-            writeOutput(e, m, i, r);
-            console.log("Thank you, come again!")
+            checkForManager();
         }
-
     })
 }
 const engineerPrompts = async () => {
@@ -166,7 +158,6 @@ const engineerPrompts = async () => {
             ]
         }
     ]).then(response => {
-
         let github = response.github;
         let addAnother = response.newEmployee;
         let r = new Engineer(e.name, e.id, e.email, github);
@@ -177,12 +168,9 @@ const engineerPrompts = async () => {
         if (addAnother === "Yes") {
             engineeringTeam();
         } else {
-            writeOutput(e, m, i, r);
-            console.log("Thank you, come again!")
+            checkForManager();
         }
-
     })
-
 }
 const internPrompts = async () => {
     await inquirer.prompt([
@@ -211,23 +199,23 @@ const internPrompts = async () => {
         if (addAnother === "Yes") {
             engineeringTeam();
         } else {
-            writeOutput(e, m, i, r);
-            console.log("Thank you, come again!")
+            checkForManager();
         }
-
     })
 }
-
-const writeOutput = (e, m, i, r) => {
-    //'../output/team.html'
-
+const writeOutput = () => {
     fs.writeFile(outputPath, render(empArray), function (err) {
         if (err) {
             return console.log(err);
-        }
-        console.log("Success!");
+        }        
     });
-
+}
+const checkForManager = () => {    
+    if (empArray.includes("Manager")) {
+        writeOutput();
+    } else {        
+        init();
+    }
 }
 
 // function call to initialize program
