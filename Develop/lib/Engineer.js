@@ -45,8 +45,11 @@ class Engineer extends Employee {
             let engineerGithub = response.github;
             let addAnother = response.newEmployee;
             
-            let d = new Engineer(e.name, e.id, e.email, engineerGithub);
-            console.log(d);
+            let r = new Engineer(e.name, e.id, e.email, engineerGithub);
+            
+            console.log(r);
+            
+
             if (addAnother === "Yes") {
                 
                 init();

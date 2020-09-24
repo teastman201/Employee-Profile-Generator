@@ -43,9 +43,9 @@ class Intern extends Employee {
         ]).then(response => {
             let internSchool = response.school;
             let addAnother = response.newEmployee;
-            let d = new Intern(e.name, e.id, e.email, internSchool);
-            console.log(d);
-            console.log(empArray);
+            let i = new Intern(e.name, e.id, e.email, internSchool);
+            console.log(i);
+            // console.log(empArray);
             if (addAnother === "Yes") {
                 init();
             } else {

@@ -24,39 +24,7 @@ class Manager extends Employee {
         return "Manager";
     }
 
-   managerPrompts = async () => {
-     await   inquirer.prompt([
-            {
-                type: "input",
-                name: "office",
-                message: "What is the manager's office number?"
-            },
-            {
-                type: "list",
-                name: "newEmployee",
-                message: "would you like to add another employee?",
-                choices: [
-                    "Yes",
-                    "No"
-                ]
-            }
-        ]).then(response => {
-            
-            let managerOffice = response.office;
-            let addAnother = response.newEmployee;            
-            
-            // managerPrompts seems to be adding itself to the manager object
-            let d = new Manager(e.name, e.id, e.email, managerOffice);
-                console.log(d);
-            if (addAnother === "Yes") {
-                init();
-            } else {
-                
-                console.log("Thank you, come again!")
-            }
-            
-        })
-    }
+   
 
 }
 module.exports = Manager;

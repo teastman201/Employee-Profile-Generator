@@ -52,34 +52,150 @@ init = () => {
             let employeeId = response.id;
             let employeeEmail = response.email;
             let employeeType = response.class;
+            
+            // Like this, old array objects have the same properties as the newest object added to the array
+            // empObj.name = employeeName;
+            // empObj.id = employeeId;
+            // empObj.email = employeeEmail;
+            // empObj.class = employeeType;
 
+            empArray.push(employeeName);
+
+            empObj.id = employeeId;
+            empObj.email = employeeEmail;
+            empObj.class = employeeType;
+
+            employeeName.empObj;
+            console.log(empArray);
             e = new Employee(employeeName, employeeId, employeeEmail);
-            m = new Manager;
-            i = new Intern;
-            r = new Engineer;
+            m = new Manager(e.employeeName, e.employeeId, e.employeeEmail);
+            i = new Intern(e.employeeName, e.employeeId, e.employeeEmail);
+            r = new Engineer(e.employeeName, e.employeeId, e.employeeEmail);
 
-            console.log(r);
-            console.log(e);
-            console.log(m);
-            console.log(i);
+            // console.log(r);
+            // console.log(e);
+            // console.log(m);
+            // console.log(i);
 
             switch (employeeType) {
                 case "Manager":
-                    (m.managerPrompts())
+                    (managerPrompts())
                     break;
                 case "Engineer":
-                    (r.engineerPrompts())
+                    (engineerPrompts())
                     break;
                 case "Intern":
-                    (i.internPrompts())
+                    (internPrompts())
                     break;
                 default:
                     (console.log('Nothing supplied'))
             }
             
-        });
-        render;
+        });        
 }
+
+const managerPrompts = async () => {
+    await   inquirer.prompt([
+           {
+               type: "input",
+               name: "office",
+               message: "What is the manager's office number?"
+           },
+           {
+               type: "list",
+               name: "newEmployee",
+               message: "would you like to add another employee?",
+               choices: [
+                   "Yes",
+                   "No"
+               ]
+           }
+       ]).then(response => {
+           
+           let managerOffice = response.office;
+           let addAnother = response.newEmployee;            
+           empObj.office = managerOffice;
+           empArray.push(empObj);
+           console.log(empObj);
+           console.log(empArray);
+           // managerPrompts seems to be adding itself to the manager object
+           let m = new Manager(e.name, e.id, e.email, managerOffice);
+               console.log(m);
+           if (addAnother === "Yes") {
+               init();
+           } else {
+               
+               console.log("Thank you, come again!")
+           }
+           
+       })
+   }
+   const engineerPrompts = async () => {
+    await  inquirer.prompt([
+          {
+              type: "input",
+              name: "github",
+              message: "What is the engineer's GitHub username?"
+          },
+          {
+              type: "list",
+              name: "newEmployee",
+              message: "would you like to add another employee?",
+              choices: [
+                  "Yes",
+                  "No"
+              ]
+          }
+      ]).then(response => {
+          
+          let engineerGithub = response.github;
+          let addAnother = response.newEmployee;
+          
+          let r = new Engineer(e.name, e.id, e.email, engineerGithub);
+          
+          console.log(r);
+          
+
+          if (addAnother === "Yes") {
+              
+              init();
+          } else {
+              console.log("Thank you, come again!")
+          }
+          
+      })
+  
+  }
+  const internPrompts = async () => {
+    await     inquirer.prompt([
+             {
+                 type: "input",
+                 name: "school",
+                 message: "What is the name of the intern's school?"
+             },
+             {
+                 type: "list",
+                 name: "newEmployee",
+                 message: "would you like to add another employee?",
+                 choices: [
+                     "Yes",
+                     "No"
+                 ]
+             }
+         ]).then(response => {
+             let internSchool = response.school;
+             let addAnother = response.newEmployee;
+             let i = new Intern(e.name, e.id, e.email, internSchool);
+             console.log(i);
+             // console.log(empArray);
+             if (addAnother === "Yes") {
+                 init();
+             } else {
+                 console.log("Thank you, come again!")
+             }
+             
+         })
+     }
 
 // function call to initialize program
 init();
