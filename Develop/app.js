@@ -26,7 +26,6 @@ const init = () => {
                 "No"
             ]
         }
-
     ]).then(response => {
         let team = response.team;
 
@@ -132,8 +131,6 @@ const managerPrompts = async () => {
         let m = new Manager(e.name, e.id, e.email, officeNumber);
         empArray.push(m);
 
-        console.log(empArray);
-
         if (addAnother === "Yes") {
             engineeringTeam();
         } else {
@@ -162,8 +159,6 @@ const engineerPrompts = async () => {
         let addAnother = response.newEmployee;
         let r = new Engineer(e.name, e.id, e.email, github);
         empArray.push(r);
-
-        console.log(empArray);
 
         if (addAnother === "Yes") {
             engineeringTeam();
@@ -194,8 +189,6 @@ const internPrompts = async () => {
         let i = new Intern(e.name, e.id, e.email, school);
         empArray.push(i);
 
-        console.log(empArray);
-
         if (addAnother === "Yes") {
             engineeringTeam();
         } else {
@@ -207,43 +200,22 @@ const writeOutput = () => {
     fs.writeFile(outputPath, render(empArray), function (err) {
         if (err) {
             return console.log(err);
-        }        
+        }
     });
 }
-const checkForManager = () => {  
-    console.log("test1") 
-    // if (empArray.includes("Manager"))
-    // console.log(empArray instanceof Manager)
-    // console.log(empArray[0])
-    console.log(empArray.officeNumber);
-    // // function to check for officeNumber
-    // function search(nameKey, myArray){
-    //     for (var i=0; i < myArray.length; i++) {
-    //         if (myArray[i].name === nameKey) {
-    //             return myArray[i];
-    //         }
-    //     }
-    // }
-    for (var i=0; i < empArray.length; i++) {
-        console.log(empArray[i]);
-        console.log(m)
-        if (empArray[i] === "Manager") { 
-            console.log(empArray[i]);
+const checkForManager = async () => {
+    for (var i = 0; i < empArray.length; i++) {
+        if (empArray[i] instanceof Manager) {
+            console.log(empArray);
+            writeOutput();
+        } else {
+            // await console.log("Please add a manager to the team.");
+            await init();
         }
-    
-}
-
-    if (empArray.includes("Manager")) {
-        // writeOutput();
-        console.log("test2");
-    } else {        
-        console.log("test3")
-        init();
     }
 }
-
-// function call to initialize program
-init();
+    // function call to initialize program
+    init();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
