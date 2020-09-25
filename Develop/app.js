@@ -20,12 +20,13 @@ const init = () => {
         {
             type: "list",
             name: "team",
-            message: "Would you like to build an engineering team? An engineering team consists of a Manager, and any number of Engineers and Interns.",
+            message: "Would you like to build an engineering team? An engineering team must have at least one Manager.",
             choices: [
                 "Yes",
                 "No"
             ]
         }
+
     ]).then(response => {
         let team = response.team;
 
@@ -100,7 +101,6 @@ const engineeringTeam = () => {
                 default:
                     (console.log('Nothing supplied'))
             }
-
         });
 }
 const managerPrompts = async () => {
@@ -210,22 +210,40 @@ const writeOutput = () => {
         }        
     });
 }
-const checkForManager = () => {    
+const checkForManager = () => {  
+    console.log("test1") 
+    // if (empArray.includes("Manager"))
+    // console.log(empArray instanceof Manager)
+    // console.log(empArray[0])
+    console.log(empArray.officeNumber);
+    // // function to check for officeNumber
+    // function search(nameKey, myArray){
+    //     for (var i=0; i < myArray.length; i++) {
+    //         if (myArray[i].name === nameKey) {
+    //             return myArray[i];
+    //         }
+    //     }
+    // }
+    for (var i=0; i < empArray.length; i++) {
+        console.log(empArray[i]);
+        console.log(m)
+        if (empArray[i] === "Manager") { 
+            console.log(empArray[i]);
+        }
+    
+}
+
     if (empArray.includes("Manager")) {
-        writeOutput();
+        // writeOutput();
+        console.log("test2");
     } else {        
+        console.log("test3")
         init();
     }
 }
 
 // function call to initialize program
 init();
-
-// employee name should be array element with id, class, email, github/school/office as objects
-// push name to array, push everything else to the name as objects
-
-// when user selects no then write file using htmlrenderer.js
-
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
