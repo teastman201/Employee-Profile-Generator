@@ -130,11 +130,12 @@ const managerPrompts = async () => {
         let addAnother = response.newEmployee;
         let m = new Manager(e.name, e.id, e.email, officeNumber);
         empArray.push(m);
+        // console.log(m)
 
         if (addAnother === "Yes") {
             engineeringTeam();
         } else {
-            checkForManager();
+            checkForManager(m);
         }
     })
 }
@@ -185,6 +186,7 @@ const internPrompts = async () => {
         }
     ]).then(response => {
         let school = response.school;
+        // could save one line by moving right hand side operator into if case.
         let addAnother = response.newEmployee;
         let i = new Intern(e.name, e.id, e.email, school);
         empArray.push(i);
@@ -203,16 +205,14 @@ const writeOutput = () => {
         }
     });
 }
-const checkForManager = async () => {
-    for (var i = 0; i < empArray.length; i++) {
-        if (empArray[i] instanceof Manager) {
-            console.log(empArray);
+const checkForManager =  (m) => {
+        // console.log(m)
+        if (m === undefined) {           
+           init();
+        } else {            
             writeOutput();
-        } else {
-            // await console.log("Please add a manager to the team.");
-            await init();
         }
-    }
+    
 }
     // function call to initialize program
     init();
