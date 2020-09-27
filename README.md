@@ -1,7 +1,11 @@
 # Employee Profile Generator ![GitHub](https://img.shields.io/github/license/teastman201/Employee-Profile-Generator?style=for-the-badge)
   
 ## Description
-Generates an employee profile with name, id, email, and role.        
+Generates an employee profile with name, id, email, and role.    
+
+## Demonstration
+![Employee-Profile-Generator-Demo](/Assets/Employee-Profile-Generator)
+
   
 ## Table of Contents
 * [Description](#description)
