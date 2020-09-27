@@ -4,8 +4,7 @@
 Generates an employee profile with name, id, email, and role.    
 
 ## Demonstration
-![Employee-Profile-Generator-Demo](/Assets/Employee-Profile-Generator)
-
+![Employee-Profile-Generator-Demo](./Assets/Employee-Profile-Generator)
   
 ## Table of Contents
 * [Description](#description)
